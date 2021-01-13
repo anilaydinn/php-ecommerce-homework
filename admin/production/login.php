@@ -31,21 +31,29 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form>
+                    <form method="POST" action="../manage/funcs.php">
                         <h1>WWCommerce</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input type="text" name="admin_username" class="form-control" placeholder="Username" required="" />
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+                            <input type="password" name="admin_password" class="form-control" placeholder="Password" required="" />
                         </div>
                         <div>
-                            <button style="width: 100%; background-color: #73879C; color:white;" type="submit" class="btn btn-default"> Login</button>
+                            <button style="width: 100%; background-color: #73879C; color:white;" name="adminlogin" type="submit" class="btn btn-default"> Login</button>
                         </div>
 
                         <div class="clearfix"></div>
 
                         <div class="separator">
+                            <p class="change_link">
+                                <?php if ($_GET['status'] == "false") { ?>
+                                    Username or password wrong !
+                                <?php } else if ($_GET['status'] == "exit") { ?>
+                                    Logout succes!
+                                <?php } ?>
+                            </p>
+
                             <div class="clearfix"></div>
                             <br />
 

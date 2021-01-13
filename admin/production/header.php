@@ -1,4 +1,22 @@
-<?php include './manage/connect.php' ?>
+<?php
+ob_start();
+session_start();
+
+include '../manage/connect.php';
+
+$adminQuery = $db->prepare("SELECT * FROM admin WHERE admin_username=:username");
+$adminQuery->execute(array(
+    'username' => $_SESSION['admin_username']
+));
+$count = $adminQuery->rowCount();
+$getAdmin = $adminQuery->fetch(PDO::FETCH_ASSOC);
+
+if ($count == 0) {
+    header("Location:login.php?status=unauthorized");
+    exit;
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +67,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2><?php echo $getAdmin['admin_username']; ?></h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -61,7 +79,9 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-user"></i> Admins </span></a>
+                                <li><a href="admins.php"><i class="fa fa-user"></i> Admins </span></a></li>
+                                <li><a href="add_category.php"><i class="fa fa-list"></i> Add Category </span></a></li>
+                                <li><a href="categories.php"><i class="fa fa-list"></i> Categories </span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -80,7 +100,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">John Doe
+                                    <img src="images/img.jpg" alt=""><?php echo $getAdmin['admin_username']; ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -92,7 +112,7 @@
                                         </a>
                                     </li>
                                     <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li><a href="logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
                             </li>
 
