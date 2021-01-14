@@ -82,6 +82,8 @@ if ($count == 0) {
                                 <li><a href="admins.php"><i class="fa fa-user"></i> Admins </span></a></li>
                                 <li><a href="add_category.php"><i class="fa fa-list"></i> Add Category </span></a></li>
                                 <li><a href="categories.php"><i class="fa fa-list"></i> Categories </span></a></li>
+                                <li><a href="add_product.php"><i class="fa fa-plus"></i> Add Product </span></a></li>
+                                <li><a href="products.php"><i class="fa fa-list"></i> Products </span></a></li>
                             </ul>
                         </div>
                     </div>

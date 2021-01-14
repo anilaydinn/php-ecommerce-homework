@@ -1,3 +1,5 @@
+<?php error_reporting(false); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,15 +1,12 @@
 <?php
-
 error_reporting(false);
-
 include 'header.php';
 
-$categoryQuery = $db->prepare("SELECT * FROM category");
-$categoryQuery->execute();
+$productsQuery = $db->prepare("SELECT * FROM product");
+$productsQuery->execute();
 
 ?>
 
-<!-- page content -->
 <div class="right_col" role="main">
     <div class="">
 
@@ -18,14 +15,13 @@ $categoryQuery->execute();
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Category List <small>,
+                        <h2>Product List <small>,
 
                                 <?php if ($_GET['status'] == "true") { ?>
                                     <b style="color: green;">Success!</b>
                                 <?php } else if ($_GET['status'] == "false") { ?>
                                     <b style="color: red;">Error!</b>
                                 <?php } ?>
-
 
                             </small></h2>
                         <ul class="nav navbar-right panel_toolbox">
@@ -46,23 +42,28 @@ $categoryQuery->execute();
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <td>ID</td>
-                                    <td>Category Name</td>
+                                    <td>Product Image</td>
+                                    <td>Product Name</td>
+                                    <td>Product Category</td>
+                                    <td>Product Price</td>
                                     <td>Edit</td>
                                     <td>Delete</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($getCategories = $categoryQuery->fetch(PDO::FETCH_ASSOC)) { ?>
+                                <?php while ($getProducts = $productsQuery->fetch(PDO::FETCH_ASSOC)) { ?>
                                     <tr>
-                                        <td><?php echo $getCategories['category_id']; ?></td>
-                                        <td><?php echo $getCategories['category_name']; ?></td>
-                                        <td><a href="edit_category.php?category_id=<?php echo $getCategories['category_id']; ?>"><button class="btn btn-warning">Edit</button></a></td>
-                                        <td><a href="../manage/funcs.php?category_id=<?php echo $getCategories['category_id']; ?>"><button class="btn btn-danger">Delete</button></a></td>
+                                        <td><?php echo $getProducts['product_id']; ?></td>
+                                        <td align="center"><img width="100" height="100" src="data:image/png;base64, <?php echo base64_encode($getProducts['product_image']); ?>"></td>
+                                        <td><?php echo $getProducts['product_name']; ?></td>
+                                        <td><?php echo $getProducts['product_category']; ?></td>
+                                        <td><?php echo $getProducts['product_price']; ?></td>
+                                        <td><a href="./edit_product.php?product_id=<?php echo $getProducts['product_id']; ?>"><button class="btn btn-warning">Edit</button></a></td>
+                                        <td><a href="../manage/funcs.php?product_id=<?php echo $getProducts['product_id']; ?>"><button class="btn btn-danger">Delete</button></a></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -71,12 +72,8 @@ $categoryQuery->execute();
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 </div>
-<!-- /page content -->
+
 
 <?php include 'footer.php'; ?>
