@@ -196,19 +196,53 @@ if (isset($_POST['userlogin'])) {
 
     $user_password = md5($_POST['user_password']);
 
-    $userQuery = $db->prepare("SELECT * FROM user WHERE user_username=:user_username and user_password=:user_password");
+    $userQuery = $db->prepare("SELECT * FROM user WHERE user_email=:user_email and user_password=:user_password");
     $userQuery->execute(array(
-        'user_username' => $_POST['user_username'],
+        'user_email' => $_POST['user_email'],
         'user_password' => $user_password
     ));
 
     $count = $userQuery->rowCount();
 
     if ($count == 1) {
-        $_SESSION['user_username'] = $_POST['user_username'];
+        $_SESSION['user_email'] = $_POST['user_email'];
         header("Location:../../index.php?login=success");
         exit;
     } else {
         header("Location:../../index.php?login=false");
+    }
+}
+
+
+if (isset($_POST['addcart'])) {
+
+    $addChart = $db->prepare("INSERT INTO cart SET 
+    product_id=:product_id,
+    user_id=:user_id
+    ");
+
+    $add = $addChart->execute(array(
+        'product_id' => $_POST['product_id'],
+        'user_id' => $_POST['user_id']
+    ));
+
+    if ($add) {
+        header("Location:../../cart.php?status=true");
+    } else {
+        header("Location:../../cart.php?status=false");
+    }
+}
+
+if (isset($_POST['pay'])) {
+
+    $deleteCart = $db->prepare("DELETE FROM cart WHERE user_id=:user_id");
+    $deleteCart->execute(array(
+        'user_id' => $_POST['user_id']
+    ));
+
+    if ($deleteCart) {
+        header("Location:../../cart.php?payment=success");
+    } else {
+        header("Location:../../cart.php?payment=false");
     }
 }

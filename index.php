@@ -12,12 +12,7 @@ if (isset($_GET['category_name'])) {
     $productQuery = $db->prepare("SELECT * FROM product");
     $productQuery->execute();
 }
-
-
-
 ?>
-
-
 
 <div class="container">
     <div class="row">
@@ -32,12 +27,12 @@ if (isset($_GET['category_name'])) {
                     <div class="col-md-4">
                         <div class="productwrap">
                             <div class="pr-img">
-                                <a href="product.htm"><img src="data:image/png;base64, <?php echo base64_encode($getProducts['product_image']); ?>" alt="" class="img-responsive"></a>
+                                <a href="product.php?product_id=<?php echo $getProducts['product_id']; ?>"><img src="data:image/png;base64, <?php echo base64_encode($getProducts['product_image']); ?>" alt="" class="img-responsive"></a>
                                 <div class="pricetag">
                                     <div class="inner"><span class="price">$<?php echo $getProducts['product_price']; ?></span></div>
                                 </div>
                             </div>
-                            <span class="smalltitle"><a href="product.htm"><?php echo $getProducts['product_name']; ?></a></span>
+                            <span class="smalltitle"><a href="product.php?product_id=<?php echo $getProducts['product_id']; ?>"><?php echo $getProducts['product_name']; ?></a></span>
                         </div>
                     </div>
                 <?php } ?>
@@ -46,25 +41,7 @@ if (isset($_GET['category_name'])) {
             <div class="spacer"></div>
         </div>
         <!--Main content-->
-        <div class="col-md-3">
-            <!--sidebar-->
-            <div class="title-bg">
-                <div class="title">Categories</div>
-            </div>
-
-            <div class="categorybox">
-                <ul>
-                    <?php while ($getCategory = $categoryQuery->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <li><a href="index.php?category_name=<?php echo $getCategory['category_name']; ?>"><?php echo $getCategory['category_name']; ?></a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-
-            <div class="ads">
-                <a href="product.htm"><img src="images\ads.png" class="img-responsive" alt=""></a>
-            </div>
-
-        </div>
+        <?php include 'sidebar.php' ?>
         <!--sidebar-->
     </div>
 </div>
